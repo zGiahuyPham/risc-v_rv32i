@@ -12,10 +12,10 @@ module singlecycle (
   logic [2:0]  rwsel;
   logic [1:0]  wbsel;
   
-  logic [31:0] pc, res1, res2, imm, a, b, res, ldata, wdata;
+  logic [31:0] pc, reg1, reg2, imm, a, b, res, ldata, wdata;
   assign wdata = (wbsel == 2'b01) ? res : (wbsel == 2'b10) ? pc + 32'd4 : ldata;
-  assign a = asel ? pc : res1;
-  assign b = bsel ? imm : res2;
+  assign a = asel ? pc : reg1;
+  assign b = bsel ? imm : reg2;
   
   assign pcdebug = pc;
 
@@ -32,13 +32,13 @@ module singlecycle (
     .waddr (instr[11:7]),
     .wdata (wdata),
     .regwen(regwen),
-    .res1  (res1),
-    .res2  (res2)
+    .reg1  (reg1),
+    .reg2  (reg2)
   );
 
   brcmp branch_comp (
-    .a   (res1),
-    .b   (res2),
+    .a   (reg1),
+    .b   (reg2),
     .brun(brun),
     .brlt(brlt),
     .breq(breq)
@@ -77,7 +77,7 @@ module singlecycle (
     .clk  (clk),
     .rst  (rst),
     .addr (res[11:0]),
-    .sdata(res2),
+    .sdata(reg2),
     .wren (wren),
     .sw   (sw),
     .btn  (btn),
