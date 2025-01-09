@@ -6,7 +6,7 @@ module lsu (
   input  logic        wren,
   input  logic [31:0] sw, btn,
   input  logic [2:0]  rwsel,
-  output logic [31:0] rdata,
+  output logic [31:0] ldata,
   output logic [31:0] hex0, hex1, hex2, hex3, hex4, hex5, hex6, hex7, ledr, ledg, lcd
 );
 
@@ -30,7 +30,7 @@ module lsu (
     .addr (addr[10:0]),
     .sdata(newdata),
     .wren (mwren),
-    .rdata(mrdata)
+    .ldata(mrdata)
   );
 
   outperiph output_peripherals (
@@ -39,7 +39,7 @@ module lsu (
     .addr (addr[7:0]),
     .sdata(newdata),
     .wren (periphen),
-    .rdata(periphrdata),
+    .ldata(periphrdata),
     .hex0 (hex0),
     .hex1 (hex1),
     .hex2 (hex2),
@@ -59,12 +59,12 @@ module lsu (
   
   always_comb begin
     casez(rwsel)
-      3'b000 : rdata = {{24{odata[7]}}, odata[7:0]};    // lb
-      3'b001 : rdata = {{16{odata[15]}}, odata[15:0]};  // lh
-      3'b010 : rdata = odata;                           // lw
-      3'b100 : rdata = {24'd0, odata[7:0]};             // lbu
-      3'b101 : rdata = {16'd0, odata[15:0]};            // lhu
-      default: rdata = 32'dx;
+      3'b000 : ldata = {{24{odata[7]}}, odata[7:0]};    // lb
+      3'b001 : ldata = {{16{odata[15]}}, odata[15:0]};  // lh
+      3'b010 : ldata = odata;                           // lw
+      3'b100 : ldata = {24'd0, odata[7:0]};             // lbu
+      3'b101 : ldata = {16'd0, odata[15:0]};            // lhu
+      default: ldata = 32'dx;
     endcase
   end
   
