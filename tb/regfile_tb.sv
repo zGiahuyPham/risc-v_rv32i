@@ -11,8 +11,8 @@ module regfile_tb;
   logic [4:0]  addr2;
   logic [31:0] wdata;
   logic        regwen;
-  logic [31:0] res1;
-  logic [31:0] res2;
+  logic [31:0] reg1;
+  logic [31:0] reg2;
 
   regfile dut (
     .clk(clk),
@@ -22,8 +22,8 @@ module regfile_tb;
     .addr2(addr2),
     .wdata(wdata),
     .regwen(regwen),
-    .res1(res1),
-    .res2(res2)
+    .reg1(reg1),
+    .reg2(reg2)
   );
   
   task write_data(input [4:0] t_addr, input [31:0] data);
@@ -70,13 +70,13 @@ module regfile_tb;
       addr1 = rand_addr;
       addr2 = rand_addr1;
       #10; // wait 1 clk
-      assert((!rand_addr ? 0 : dut.rs[rand_addr]) == res1) else begin
-        $display("Wrong answer on test %0d: addr1 = %d, output = %h, ", i, addr1, res1,
+      assert((!rand_addr ? 0 : dut.rs[rand_addr]) == reg1) else begin
+        $display("Wrong answer on test %0d: addr1 = %d, output = %h, ", i, addr1, reg1,
                  "expected addr1 = %d, output = %h", rand_addr, dut.rs[rand_addr]);
         $stop;
       end
-      assert((!rand_addr1 ? 0 : dut.rs[rand_addr1]) == res2) else begin
-        $display("Wrong answer on test %0d: addr2 = %d, output = %h, ", i, addr2, res2,
+      assert((!rand_addr1 ? 0 : dut.rs[rand_addr1]) == reg2) else begin
+        $display("Wrong answer on test %0d: addr2 = %d, output = %h, ", i, addr2, reg2,
                  "expected addr2 = %d, output = %h", rand_addr1, dut.rs[rand_addr1]);
         $stop;
       end
