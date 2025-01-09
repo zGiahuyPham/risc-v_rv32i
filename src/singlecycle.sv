@@ -77,7 +77,7 @@ module singlecycle (
     .clk  (clk),
     .rst  (rst),
     .addr (res[11:0]),
-    .wdata(res2),
+    .sdata(res2),
     .wren (wren),
     .sw   (sw),
     .btn  (btn),
