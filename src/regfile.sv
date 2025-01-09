@@ -3,7 +3,7 @@ module regfile (
   input  logic [4:0]  addr1, addr2, waddr,
   input  logic [31:0] wdata,
   input  logic        regwen,
-  output logic [31:0] res1, res2
+  output logic [31:0] reg1, reg2
 );
 
   logic [31:0] rs [31:0];
@@ -18,8 +18,8 @@ module regfile (
   end
 
   always_comb begin
-    res1 = |addr1 ? rs[addr1] : '0;
-    res2 = |addr2 ? rs[addr2] : '0;
+    reg1 = |addr1 ? rs[addr1] : '0;
+    reg2 = |addr2 ? rs[addr2] : '0;
   end
 	
 endmodule
