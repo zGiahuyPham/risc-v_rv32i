@@ -1,8 +1,8 @@
 module singlecycle (
-  input         clk, rst,
-  input  [31:0] sw, btn,
-  output [31:0] hex0, hex1, hex2, hex3, hex4, hex5, hex6, hex7, ledr, ledg, lcd,
-  output [31:0] pcdebug
+  input  logic  clk, rst,
+  input  logic [31:0] sw, btn,
+  output logic [31:0] hex0, hex1, hex2, hex3, hex4, hex5, hex6, hex7, ledr, ledg, lcd,
+  output logic [31:0] pcdebug
 );
 
   logic [31:0] instr;
@@ -25,15 +25,15 @@ module singlecycle (
   );
 
   regfile reg_file (
-    .clk(clk),
-    .rst(rst),
-    .addr1(instr[19:15]),
-    .addr2(instr[24:20]),
-    .waddr(instr[11:7]),
-    .wdata(wdata),
+    .clk   (clk),
+    .rst   (rst),
+    .addr1 (instr[19:15]),
+    .addr2 (instr[24:20]),
+    .waddr (instr[11:7]),
+    .wdata (wdata),
     .regwen(regwen),
-    .res1(res1),
-    .res2(res2)
+    .res1  (res1),
+    .res2  (res2)
   );
 
   brcmp branch_comp (
