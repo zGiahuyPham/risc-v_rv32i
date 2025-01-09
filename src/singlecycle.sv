@@ -12,8 +12,8 @@ module singlecycle (
   logic [2:0]  rwsel;
   logic [1:0]  wbsel;
   
-  logic [31:0] pc, res1, res2, imm, a, b, res, rdata, wdata;
-  assign wdata = (wbsel == 2'b01) ? res : (wbsel == 2'b10) ? pc + 32'd4 : rdata;
+  logic [31:0] pc, res1, res2, imm, a, b, res, ldata, wdata;
+  assign wdata = (wbsel == 2'b01) ? res : (wbsel == 2'b10) ? pc + 32'd4 : ldata;
   assign a = asel ? pc : res1;
   assign b = bsel ? imm : res2;
   
@@ -82,7 +82,7 @@ module singlecycle (
     .sw   (sw),
     .btn  (btn),
     .rwsel(rwsel),
-    .rdata(rdata),
+    .ldata(ldata),
     .hex0 (hex0),
     .hex1 (hex1),
     .hex2 (hex2),
