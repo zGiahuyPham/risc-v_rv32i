@@ -2,7 +2,7 @@ module lsu (
   input  logic        clk,
   input  logic        rst,
   input  logic [11:0] addr,
-  input  logic [31:0] wdata,
+  input  logic [31:0] sdata,
   input  logic        wren,
   input  logic [31:0] sw, btn,
   input  logic [2:0]  rwsel,
@@ -18,9 +18,9 @@ module lsu (
   
   always_comb begin
     casez(rwsel)
-      3'b000  : newdata = {odata[31:8], wdata[7:0]};    // sb
-      3'b001  : newdata = {odata[31:16], wdata[15:0]};  // sh
-      3'b010  : newdata = wdata;                        // sw 
+      3'b000  : newdata = {odata[31:8], sdata[7:0]};    // sb
+      3'b001  : newdata = {odata[31:16], sdata[15:0]};  // sh
+      3'b010  : newdata = sdata;                        // sw 
       default : newdata = 32'dx;
     endcase
   end
@@ -28,7 +28,7 @@ module lsu (
   dmem data_memory (
     .clk  (clk),
     .addr (addr[10:0]),
-    .wdata(newdata),
+    .sdata(newdata),
     .wren (mwren),
     .rdata(mrdata)
   );
@@ -37,7 +37,7 @@ module lsu (
     .clk  (clk),
     .rst  (rst),
     .addr (addr[7:0]),
-    .wdata(newdata),
+    .sdata(newdata),
     .wren (periphen),
     .rdata(periphrdata),
     .hex0 (hex0),
