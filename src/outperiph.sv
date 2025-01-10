@@ -2,9 +2,9 @@ module outperiph (
   input  logic        clk,
   input  logic        rst,
   input  logic [7:0]  addr,
-  input  logic [31:0] wdata,
+  input  logic [31:0] sdata,
   input  logic        wren,
-  output logic [31:0] rdata,
+  output logic [31:0] ldata,
   output logic [31:0] hex0, hex1, hex2, hex3, hex4, hex5, hex6, hex7, ledr, ledg, lcd
 );
 
@@ -23,17 +23,17 @@ module outperiph (
       lcd  <= 32'b0;
     end else if (wren) begin
       case (addr)
-        8'h00: hex0 <= wdata;
-        8'h10: hex1 <= wdata;
-        8'h20: hex2 <= wdata;
-        8'h30: hex3 <= wdata;
-        8'h40: hex4 <= wdata;
-        8'h50: hex5 <= wdata;
-        8'h60: hex6 <= wdata;
-        8'h70: hex7 <= wdata;
-        8'h80: ledr <= wdata;
-        8'h90: ledg <= wdata;
-        8'hA0: lcd  <= wdata;
+        8'h00: hex0 <= sdata;
+        8'h10: hex1 <= sdata;
+        8'h20: hex2 <= sdata;
+        8'h30: hex3 <= sdata;
+        8'h40: hex4 <= sdata;
+        8'h50: hex5 <= sdata;
+        8'h60: hex6 <= sdata;
+        8'h70: hex7 <= sdata;
+        8'h80: ledr <= sdata;
+        8'h90: ledg <= sdata;
+        8'hA0: lcd  <= sdata;
         default: begin
           hex0 <= hex0;
           hex1 <= hex1;
@@ -53,18 +53,18 @@ module outperiph (
 
   always_comb begin
     case (addr)
-      8'h00: rdata = hex0;
-      8'h10: rdata = hex1;
-      8'h20: rdata = hex2;
-      8'h30: rdata = hex3;
-      8'h40: rdata = hex4;
-      8'h50: rdata = hex5;
-      8'h60: rdata = hex6;
-      8'h70: rdata = hex7;
-      8'h80: rdata = ledr;
-      8'h90: rdata = ledg;
-      8'hA0: rdata = lcd;
-      default: rdata = 32'd0;
+      8'h00: ldata = hex0;
+      8'h10: ldata = hex1;
+      8'h20: ldata = hex2;
+      8'h30: ldata = hex3;
+      8'h40: ldata = hex4;
+      8'h50: ldata = hex5;
+      8'h60: ldata = hex6;
+      8'h70: ldata = hex7;
+      8'h80: ldata = ledr;
+      8'h90: ldata = ledg;
+      8'hA0: ldata = lcd;
+      default: ldata = 32'd0;
     endcase
   end
 
