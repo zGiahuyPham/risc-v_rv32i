@@ -1,11 +1,12 @@
-# Single-Cycle RISC-V RV32I Processor
+# RISC-V RV32I Processor
 
-This repository contains the implementation of a **single-cycle RISC-V RV32I processor**. The design adheres to the RISC-V instruction set architecture (ISA) for 32-bit integer operations, commonly referred to as RV32I. The processor is based on a standard single-cycle datapath.
+This repository contains the implementation of a **RISC-V RV32I processor**, supporting both **single-cycle** and **pipelined** datapath versions. The design adheres to the RISC-V instruction set architecture (ISA) for 32-bit integer operations (RV32I), commonly referred to as RV32I.
 
 ---
 
 ## Features
 
+### Single-Cycle Processor
 - **Architecture**: Implements the RV32I base integer instruction set.
 - **Design**: Follows a single-cycle processor model, meaning all instructions execute in a single clock cycle.
 - **Modules**:
@@ -18,6 +19,18 @@ This repository contains the implementation of a **single-cycle RISC-V RV32I pro
   - **Load/Store Unit (LSU)**: Manages data memory access for load/store instructions.
 - **Control Unit**: Generates control signals for all modules.
 - **I/O Interface**: Enables interaction with peripherals such as LEDs, switches, and debugging outputs.
+
+### Pipelined Processor
+- **Five-Stage Pipeline**:
+  1. **Instruction Fetch (IF)**: Fetches instruction from memory.
+  2. **Instruction Decode (ID)**: Decodes instruction and reads registers.
+  3. **Execute (EX)**: Performs ALU operations and computes addresses.
+  4. **Memory Access (MEM)**: Reads/writes data memory.
+  5. **Write-Back (WB)**: Writes results back to the register file.
+- **Hazard Handling**:
+  - **Hazard Detection Unit**: Detects data hazards and stalls pipeline when necessary.
+  - **Forwarding Unit**: Resolves data hazards by forwarding results from later stages.
+  - **Branch Prediction**: Implements basic branch prediction to mitigate control hazards.
 
 ---
 
@@ -44,6 +57,7 @@ The following instruction types are supported:
 
 The processor consists of the following key components:
 
+### Single-Cycle Components
 - **Program Counter (PC)**: Holds the address of the current instruction and increments it by 4 for sequential execution.
 - **Instruction Memory (Imem)**: Provides the instruction at the address specified by the PC.
 - **Register File (Regfile)**: Provides read access to two source registers and write access to the destination register.
@@ -53,6 +67,11 @@ The processor consists of the following key components:
 - **Load/Store Unit (LSU)**: Handles data memory access for load and store instructions.
 - **Control Unit (Ctrlunit)**: Generates control signals based on the opcode, determining the behavior of the processor.
 - **Multiplexers**: Allow dynamic selection of inputs for operands, write-back data, and next PC address.
+
+### Pipelined Components
+- **Pipeline Registers**: Store intermediate values between stages.
+- **Hazard Detection Unit**: Detects and resolves stalls.
+- **Forwarding Unit**: Reduces stalls by forwarding data between pipeline stages.
 
 ---
 
@@ -90,10 +109,10 @@ The processor includes basic input/output capabilities for debugging and testing
 ---
 
 ## Future Enhancements
-
-- Implement **pipelining** to improve processor throughput.
-- Add support for the **RV32M** (multiplication and division) extension.
-- Extend the design for **interrupt handling** and basic exceptions.
+- Implement **Branch Prediction**: Implement dynamic prediction techniques.
+- Add support for the **RV32M Extension**: Add support for multiplication and division instructions.
+- Extend design for **Exception Handling**: Support interrupts and basic exception handling.
+- Introduce **Memory Hierarchy**: A cache for improved memory performance.
 
 ---
 
