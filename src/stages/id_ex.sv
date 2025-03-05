@@ -19,7 +19,7 @@ module ID_EX (
   always_ff @(posedge clk or negedge rst) begin
     if (~rst) begin
       pc_o     <= 32'd0;
-      instr_o   <= 32'd0;
+      instr_o  <= 32'd0;
       reg1_o   <= 32'd0;
       reg2_o   <= 32'd0;
       imm_o    <= 32'd0;
@@ -33,7 +33,7 @@ module ID_EX (
       rwsel_o  <= 3'd0;
     end else if (flush) begin
       pc_o     <= 32'd0;
-      instr_o   <= 32'd0;
+      instr_o  <= 32'd0;
       reg1_o   <= 32'd0;
       reg2_o   <= 32'd0;
       imm_o    <= 32'd0;
@@ -47,7 +47,7 @@ module ID_EX (
       rwsel_o  <= 3'd0;
     end else begin
       pc_o     <= pc_i;
-      instr_o   <= instr_i;
+      instr_o  <= instr_i;
       reg1_o   <= reg1_i;
       reg2_o   <= reg2_i;
       imm_o    <= imm_i;
