@@ -29,17 +29,17 @@ module ctrlunit (
   assign JItype = (opcode == 5'b11001);                     // jalr
   assign Ltype  = ~(|opcode);                               // opcode = 00000 loads (self defined)
 
-  assign pcsel = Jtype | JItype | (Btype & brTrue);
+  assign pcsel  = Jtype | JItype | (Btype & brTrue);
   assign immsel = {Jtype, Utype, Btype, Stype, Itype | JItype};
-  assign brun = funct3[1];
-  assign asel = Btype | Jtype | Utype;
-  assign bsel = ~Rtype;
-  assign wren = Stype;
+  assign brun   = funct3[1];
+  assign asel   = Btype | Jtype | Utype;
+  assign bsel   = ~Rtype;
+  assign wren   = Stype;
   assign regwen = ~Btype & ~Stype;
   assign wbsel  = Ltype ? 2'b00 : (Jtype | JItype) ? 2'b10 : 2'b01;
-  assign rwsel = funct3;
-  assign op = (Rtype) ? {funct7, funct3} :
-              ((Itype & ~Ltype) ? ((funct3 == 3'b101) ? {funct7, funct3} : {1'b0, funct3}) :
-              ((opcode == 5'b01101) ? 4'b1001 : 4'b0000));
+  assign rwsel  = funct3;
+  assign op     = (Rtype) ? {funct7, funct3} :
+                  ((Itype & ~Ltype) ? ((funct3 == 3'b101) ? {funct7, funct3} : {1'b0, funct3}) :
+                  ((opcode == 5'b01101) ? 4'b1001 : 4'b0000));
 
 endmodule
