@@ -5,10 +5,10 @@ module IF_ID (
 );
 
   always_ff @(posedge clk or negedge rst) begin
-    if(~rst) begin
+    if (~rst) begin
       pc_o   <= 32'd0;
       inst_o <= 32'd0;
-    end else if(en & flush) begin
+    end else if (en & flush) begin
       pc_o   <= 32'd0;
       inst_o <= 32'd0;
     end else if (en) begin
